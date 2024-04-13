@@ -1,0 +1,12 @@
+# pack-refs with: peeled fully-peeled sorted 
+f70d43aa2a0d0cda1df0f5f1ca8d0e30e5b13baa refs/remotes/origin/main
+0be95b75b6a3639f4ae2fbb57d66906443d280ae refs/remotes/origin/runpod-package-update
+482f77bdf1df32db99b0ef5a2fe3c5d31beaf7c0 refs/remotes/origin/runpod-sdk-dev
+b07ab4289380fb3ff48d406590c31832aa8dfa5b refs/tags/0.0.0
+51d69c43086ee60d67b961a28052ca5e5c2e5e8a refs/tags/0.1.0
+6e48361d319a9c12454da40af93e1aed96d92dca refs/tags/0.2.0
+ab2ead828afae811e6c52af4384d3d6b3711e895 refs/tags/0.3.0
+04250ded5b22a4a881b54329b33ec87cc7e2dc48 refs/tags/0.3.1
+cb166688e3e93b465794ebaaa3ba06f3b9b92bce refs/tags/0.3.2
+e6067c266e126b1831afcc028eefd8c8fead16fb refs/tags/0.4.0
+a5bfed50ab7ffb4aea09547e73448b9814f01d9c refs/tags/0.4.1
