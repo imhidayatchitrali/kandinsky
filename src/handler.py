@@ -1,6 +1,5 @@
 import base64
 import io
-import os
 import torch
 from PIL import Image
 from diffusers import AutoPipelineForText2Image, AutoPipelineForImage2Image
@@ -8,6 +7,7 @@ from diffusers.utils import load_image
 
 import runpod
 from runpod.serverless.utils.rp_validator import validate
+from runpod.serverless.utils import rp_cleanup
 from rp_schemas import INPUT_SCHEMA
 
 # Initialize diffusers pipelines
@@ -36,18 +36,20 @@ def generate_image(job):
 
     # Access input parameters
     prompt = validated_input['prompt']
-    num_images_per_prompt = validated_input.get('num_images_per_prompt')  # Default to 1 if not provided
+    num_images_per_prompt = validated_input.get('num_images_per_prompt', 1)  # Default to 1 if not provided
 
     # Set up Torch generator
     generator = torch.Generator(device="cpu").manual_seed(0)
 
+    # Initialize image_urls list
+    image_urls = []
+
     # Load initial image if provided
     init_image = None
-    if job_input.get('init_image', None) is not None:
+    if job_input.get('init_image'):
         init_image = load_image(job_input['init_image'])
 
     # Generate images based on the input prompt
-    image_urls = []
     for _ in range(num_images_per_prompt):
         if init_image is None:
             image = pipe(prompt, num_inference_steps=25, generator=generator).images[0]
@@ -62,11 +64,10 @@ def generate_image(job):
     rp_cleanup.clean([f"/{job['id']}"])
 
     # Prepare response based on the number of images generated
-    response = {}
     if num_images_per_prompt == 1:
-        response["image_url"] = image_urls[0]  # Single image base64
+        response = {"image_url": image_urls[0]}  # Single image base64
     else:
-        response["images"] = image_urls  # Multiple images base64 (in a list)
+        response = {"images": image_urls}  # Multiple images base64 (in a list)
 
     # Return the response containing base64-encoded image(s)
     return response
