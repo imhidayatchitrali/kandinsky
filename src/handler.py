@@ -35,7 +35,7 @@ def generate_image(job):
     validated_input = validated_input['validated_input']
 
     # Access input parameters
-    prompt = validated_input['prompt']
+    prompt = validated_input['prompt_test'] #test
     num_images_per_prompt = validated_input.get('num_images_per_prompt', 1)  # Default to 1 if not provided
 
     # Set up Torch generator
