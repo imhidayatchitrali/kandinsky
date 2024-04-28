@@ -35,7 +35,7 @@ def generate_image(job):
     validated_input = validated_input['validated_input']
 
     # Access input parameters
-    prompt = validated_input['prompt_test'] #test
+    prompt = validated_input['prompt']
     num_images_per_prompt = validated_input.get('num_images_per_prompt', 1)  # Default to 1 if not provided
 
     # Set up Torch generator
@@ -65,11 +65,9 @@ def generate_image(job):
 
     # Prepare response based on the number of images generated
     if num_images_per_prompt == 1:
-        image_base64 = image_urls[0]  # Single image base64
-        response = {"image_base64": image_base64}  # Include base64-encoded image directly
+        response = {"image_url": image_urls[0]}  # Single image base64
     else:
-        # If multiple images are generated, include them in a list
-        response = {"images_base64": image_urls}  # Multiple images base64 (in a list)
+        response = {"images": image_urls}  # Multiple images base64 (in a list)
 
     # Return the response containing base64-encoded image(s)
     return response
